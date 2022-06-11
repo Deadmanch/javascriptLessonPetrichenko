@@ -22,9 +22,9 @@ function getMathResult(arg, count) {
 		if(i === count) {
 			str += `${arg * i}`;
 		}else {
-			str += `${arg * i}- - -`;
+			str += `${arg * i}---`;
 		}
 	}
 	return str;
 }
-console.log(getMathResult(5,5));
+console.log(getMathResult(10,5));

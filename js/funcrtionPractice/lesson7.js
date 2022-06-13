@@ -14,7 +14,7 @@ function calculateVolumeAndArea(cubeEdgeLength) {
 			return `Объем куба: ${volume}, площадь всей поверхности: ${area}`;
 }
 
-console.log(calculateVolumeAndArea(-15.5));
+console.log(calculateVolumeAndArea(15));
 
 // Место для второй задачи
 function getCoupeNumber(seatOfTheTrain) {

@@ -2,13 +2,8 @@ const family = ['Peter', 'Ann', 'Alex', 'Linda'];
 
 function showFamily(arr) {
 	let str = '';
-<<<<<<< Updated upstream
 	arr.lenght === 0 ? str = 'Семья пуста' : str = 'Семья состоит из: ';
 	arr.forEach(function(item) {
-=======
-	arr.length === 0 ? str = 'Семья пуста' : str = 'Семья состоит из: '
-    arr.forEach(function(item) {
->>>>>>> Stashed changes
 		str += `${item} `;
 	});
 	return str;
@@ -18,7 +13,6 @@ console.log(showFamily(family));
 
 const favoriteCities = ['liSBon', 'ROME', 'miLan', 'Dublin'];
 
-<<<<<<< Updated upstream
 function standardizeStrings(arr) { 
 	arr.forEach(city => {
 console.log(city.toLowerCase());
@@ -59,11 +53,3 @@ function availableCurr(arr, missingCurr) {
 }
 
 console.log(availableCurr([...baseCurrencies, ...additionalCurrencies], 'EUR'));
-=======
-function standardizeStrings(arr) {
-       arr.forEach(city => {
-        console.log(city.toLowerCase())
-    });
-}
-standardizeStrings(favoriteCities);
->>>>>>> Stashed changes

@@ -17,8 +17,8 @@ const personalPlanPeter = {
 
 		let str = `Мне ${age} и я владею языками: `;
 		languages.forEach(function(lang) {
-			str += `${lang.toUpperCase()} `
-		})
+			str += `${lang.toUpperCase()} `;
+		});
 		return str;
 	}
 };

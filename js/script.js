@@ -1,5 +1,5 @@
 "use strict";
-
+let numberOfFilms;
 const personalMovieDB = {
 	count: numberOfFilms,
 	movies: {},
@@ -47,7 +47,7 @@ const personalMovieDB = {
         let genres = prompt('Введите ваш любимый жанр'.toLowerCase);
 
         if(genres === '' || genres == null) {
-            console.log('Вы ввели некорректные данные или не ввели их вовсе')
+            console.log('Вы ввели некорректные данные или не ввели их вовсе');
             i--;
         }else {
             personalMovieDB.genres = genres.split(', ');
@@ -56,14 +56,14 @@ const personalMovieDB = {
     }
 
     personalMovieDB.genres.forEach((item, i) => {
-        console.log(`Любимый жанр  ${i + 1} - это ${item} `)
-    })
+        console.log(`Любимый жанр  ${i + 1} - это ${item} `);
+    });
     },
     toogleVisibleMyDB: function() {
         if(personalMovieDB.privat) {
-            personalMovieDB.privat = false
+            personalMovieDB.privat = false;
         }else {
-            personalMovieDB.privat = true
+            personalMovieDB.privat = true;
         }
     }
 };

@@ -2,10 +2,9 @@
 function firstTask() {
     for(let i = 5; i <= 10; i++) {
 		console.log(i);
-	}
-    
-    
+	}  
 }
+
 
 // Место для второй задачи
 function secondTask() {

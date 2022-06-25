@@ -113,30 +113,46 @@ window.addEventListener('DOMContentLoaded', () => {
 	const modalTrigger = document.querySelectorAll('[data-modal]'),
 		modal = document.querySelector('.modal'),
 		modalCloseBtn = document.querySelector('[data-close]');
-
+	// * Функция открытия модального окна
+	function openModal() {
+		modal.classList.toggle('show');
+		document.body.style.overflow = 'hidden';
+		clearInterval(modalTimerId);
+	}
+	// * Перебор всех кнопок с классом modal и навешивание обработчика событий клик с функцией открытия модального окна
 	modalTrigger.forEach(btn => {
-		btn.addEventListener('click', () => {
-			modal.classList.toggle('show');
-			document.body.style.overflow = 'hidden';
-		});
+		btn.addEventListener('click', openModal);
 	});
 
+
+	// * Функция закрытия модального окна
 	function closeModal() {
 		modal.classList.toggle('show');
 		document.body.style.overflow = '';
 	}
-
+	// * Навешиваем обработчик закрытия на крестик
 	modalCloseBtn.addEventListener('click', closeModal);
-
+	// * Навешиваем обработчик закрытия если пользователь кликнул вне формы на пустое пространство
 	modal.addEventListener('click', (e) => {
 		if (e.target === modal) {
 			closeModal();
 		}
 	});
-
+	// * Навешиваем обработчик закрытия если пользователь кликнул на Esc
 	document.addEventListener('keydown', (e) => {
 		if (e.code === 'Escape' && modal.classList.contains('show')) {
 			closeModal();
 		}
 	});
+	// * Функция вызова модального окна через 3 сек
+	const modalTimerId = setTimeout(openModal, 3000);
+	// * Функция вызова модального окна когда пользователь долистал до конца страницы
+	function showModalByScroll() {
+		if (window.pageYOffset + document.documentElement.clientHeight >= document.documentElement.scrollHeight) {
+			openModal();
+			// * Отмена вызова модального окна если пользователь уже 1 раз долистал до конца и ему открылось модальное окно
+			window.removeEventListener('scroll', showModalByScroll);
+		}
+	}
+	window.addEventListener('scroll', showModalByScroll);
 });

@@ -159,7 +159,7 @@ window.addEventListener('DOMContentLoaded', () => {
 
 	// ** Используем классы для карточек
 
-	class MenuCart {
+	class MenuCard {
 		constructor(src, imgAlt, title, descr, price, parentSelector, ...classes) {
 			this.src = src;
 			this.imgAlt = imgAlt;
@@ -189,7 +189,7 @@ window.addEventListener('DOMContentLoaded', () => {
 		
 					<img src = ${this.src} alt = ${this.imgAlt} >
 					<h3 class = "menu__item-subtitle" > ${this.title} </h3> 
-					<div class = "menu__item-descr" > ${this.descr} < /div> 
+					<div class = "menu__item-descr" > ${this.descr} </div> 
 					<div class = "menu__item-divider"> 
 					</div> 
 					<div class = "menu__item-price">
@@ -201,35 +201,27 @@ window.addEventListener('DOMContentLoaded', () => {
 			this.parent.append(element);
 		}
 	}
-	new MenuCart(
-		"img/tabs/vegy.jpg",
-		"vegy",
-		'Меню "Фитнес"',
-		'Меню "Фитнес" - это новый подход к приготовлению блюд: больше свежих овощей и фруктов. Продукт активных и здоровых людей. Это абсолютно новый продукт с оптимальной ценой и высоким качеством!',
-		9,
-		'.menu .container',
-		'menu__item',
-		'big'
-	).render();
+	const getResource = async (url) => {
+		const res = await fetch(url);
+		if (!res.ok) {
+			throw new Error(`Could not fetch ${url}, status ${res.status}`);
+		}
 
-	new MenuCart(
-		"img/tabs/elite.jpg",
-		"elite",
-		'Меню “Премиум”',
-		'В меню “Премиум” мы используем не только красивый дизайн упаковки, но и качественное исполнение блюд. Красная рыба, морепродукты, фрукты - ресторанное меню без похода в ресторан!',
-		20,
-		'.menu .container'
-	).render();
+		return await res.json();
+	}
 
-	new MenuCart(
-		"img/tabs/post.jpg",
-		"post",
-		'Меню "Постное"',
-		'Меню “Постное” - это тщательный подбор ингредиентов: полное отсутствие продуктов животного происхождения, молоко из миндаля, овса, кокоса или гречки, правильное количество белков за счет тофу и импортных вегетарианских стейков.',
-		12,
-		'.menu .container',
-		'menu__item'
-	).render();
+	getResource('http://localhost:3000/menu')
+		.then(data => {
+			data.forEach(({
+				img,
+				altimg,
+				title,
+				descr,
+				price
+			}) => {
+				new MenuCard(img, altimg, title, descr, price, '.menu .container').render();
+			});
+		});
 
 	// ** Формы(отправка и получение данных)
 	const forms = document.querySelectorAll('form');
@@ -240,10 +232,22 @@ window.addEventListener('DOMContentLoaded', () => {
 	};
 
 	forms.forEach(item => {
-		postData(item);
+		bindPostData(item);
 	});
 
-	function postData(form) {
+	const postData = async (url, data) => {
+		const res = await fetch(url, {
+			method: 'POST',
+			headers: {
+				'Content-type': 'application/json; charset=utf-8'
+			},
+			body: data
+		});
+
+		return await res.json();
+	}
+
+	function bindPostData(form) {
 		form.addEventListener('submit', (e) => {
 			e.preventDefault();
 
@@ -256,18 +260,8 @@ window.addEventListener('DOMContentLoaded', () => {
 			form.insertAdjacentElement('afterend', statusMessage);
 			const formData = new FormData(form);
 
-			const object = {};
-			formData.forEach(function (value, key) {
-				object[key] = value;
-			});
-
-			fetch('server1.php', {
-					method: 'POST',
-					headers: {
-						'Content-type': 'application/json; charset=utf-8'
-					},
-					body: JSON.stringify(object),
-				}).then(data => data.text())
+			const json = JSON.stringify(Object.fromEntries(formData.entries()));
+			postData('http://localhost:3000/requests', json)
 				.then(data => {
 					console.log(data);
 					showThanksModal(message.success);
@@ -302,4 +296,7 @@ window.addEventListener('DOMContentLoaded', () => {
 			}
 		});
 	}
+	fetch('http://localhost:3000/menu')
+		.then(data => data.json())
+		.then(res => console.log(res));
 });

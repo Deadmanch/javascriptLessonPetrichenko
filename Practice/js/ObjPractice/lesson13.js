@@ -38,6 +38,6 @@ function isBudgetEnough(data) {
 				}else {
 					return 'Бюджета не достаточно';
 				}
-}
+} 
 
 console.log(isBudgetEnough(shoppingMallData));

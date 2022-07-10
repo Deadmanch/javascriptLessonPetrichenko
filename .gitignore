@@ -2,9 +2,15 @@
 
 # dependencies
 <<<<<<< HEAD
+<<<<<<< HEAD
+/node_modules*
+=======
+*/node_modules*
+=======
 */node_modules*
 =======
 /node_modules*
+>>>>>>> master
 >>>>>>> master
 /.pnp
 .pnp.js
